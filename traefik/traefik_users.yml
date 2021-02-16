@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: traefik-users
+  namespace: kube-system
+data:
+  # htpasswd -nb user password | openssl base64
+  users: |
+    "***********************"
