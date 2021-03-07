@@ -22,6 +22,11 @@ spec:
           value: 10.0.0.0/8,192.168.0.0/16,172.16.0.0/12
         - name: HOSTNAME
           value: plex.anasjabri.com
+        - name: PLEX_CLAIM
+          valueFrom:
+            secretKeyRef:
+              name: plex-claim
+              key: claim-id
         - name: TZ
           value: America/Edmonton
         image: plexinc/pms-docker
