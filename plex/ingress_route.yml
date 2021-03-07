@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: plex-ingressroute
+  namespace: plex
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`plex.anasjabri.com`)
+      kind: Rule
+      services:
+      - name: plex-service
+        port: 32400
+      middlewares:
+      - name: redirect-scheme
+        namespace: kube-system
+  tls:
+    secretName: plex.anasjabri.com-tls

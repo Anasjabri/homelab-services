@@ -3,17 +3,21 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: dashboard
+  namespace: kube-system
 spec:
   entryPoints:
     - web
     - websecure
   routes:
-    - match: Host(`traefik.anasjabri.com`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+    - match: Host(`traefik.anasjabri.com`)
       kind: Rule
       services:
         - name: api@internal
           kind: TraefikService
       middlewares:
         - name: basic-auth
+          namespace: kube-system
+        - name: redirect-scheme
+          namespace: kube-system
   tls:
     secretName: traefik.anasjabri.com-tls

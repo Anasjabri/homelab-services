@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plex
+  namespace: plex
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: plex
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: plex
+    spec:
+      containers:
+      - env:
+        - name: ALLOWED_NETWORKS
+          value: 10.0.0.0/8,192.168.0.0/16,172.16.0.0/12
+        - name: HOSTNAME
+          value: plex.anasjabri.com
+        - name: TZ
+          value: America/Edmonton
+        image: plexinc/pms-docker
+        imagePullPolicy: Always
+        #livenessProbe:
+        #  failureThreshold: 3
+        #  initialDelaySeconds: 240
+        #  periodSeconds: 2
+        #  successThreshold: 1
+        #  tcpSocket:
+        #    port: 32400
+        #  timeoutSeconds: 10
+        name: plex
+        ports:
+        - containerPort: 32400
+          name: plexport
+          protocol: TCP
+        #readinessProbe:
+        #  failureThreshold: 12
+        #  initialDelaySeconds: 60
+        #  periodSeconds: 5
+        #  successThreshold: 2
+        #  tcpSocket:
+        #    port: 32400
+        #  timeoutSeconds: 2
+        resources: 
+          limits:
+            cpu: 4
+            memory: 8Gi
+            ephemeral-storage: 10Gi
+          requests:
+            cpu: 4
+            memory: 8Gi
+            ephemeral-storage: 10Gi
+        volumeMounts:
+        - mountPath: /data
+          name: plex-data
+        - mountPath: /config
+          name: plex-config
+          subPath: config
+        - mountPath: /transcode
+          name: plex-transcode
+      restartPolicy: Always
+      volumes:
+      - name: plex-data
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/plex
+          server: 10.0.5.226
+      - name: plex-config
+        persistentVolumeClaim:
+          claimName: plex-config
+      - name: plex-transcode
+        persistentVolumeClaim:
+          claimName: plex-transcode
