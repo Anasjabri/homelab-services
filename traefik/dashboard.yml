@@ -15,3 +15,5 @@ spec:
           kind: TraefikService
       middlewares:
         - name: basic-auth
+  tls:
+    secretName: traefik.anasjabri.com-tls

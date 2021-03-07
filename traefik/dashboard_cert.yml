@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: traefik.anasjabri.com
+  namespace: kube-system
+spec:
+  secretName: traefik.anasjabri.com-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: traefik.anasjabri.com
+  dnsNames:
+  - traefik.anasjabri.com
