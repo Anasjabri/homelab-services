@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sabnzbd
+  namespace: sabnzbd
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: sabnzbd
+  template:
+    metadata:
+      labels:
+        app: sabnzbd
+    spec:
+      containers:
+      - env:
+        - name: HOST_WHITELIST_ENTRIES
+          value: "sabnzbd.anasjabri.com"
+        - name: TZ
+          value: America/Edmonton
+        image: linuxserver/sabnzbd:latest
+        imagePullPolicy: Always
+        name: sabnzbd
+        ports:
+        - name: http
+          containerPort: 8080
+        volumeMounts:
+        - mountPath: /config
+          name: sabnzbd-config
+        - mountPath: /downloads
+          name: sabnzbd-data
+      restartPolicy: Always
+      volumes:
+      - name: sabnzbd-config
+        persistentVolumeClaim:
+          claimName: sabnzbd-config
+      - name: sabnzbd-data
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/plex
+          server: 10.0.5.226

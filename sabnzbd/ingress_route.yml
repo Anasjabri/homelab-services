@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: sabnzbd-ingressroute
+  namespace: sabnzbd
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`sabnzbd.anasjabri.com`)
+      kind: Rule
+      services:
+      - name: sabnzbd-service
+        port: 8080
+      middlewares:
+      - name: basic-auth
+        namespace: kube-system
+  tls:
+    secretName: sabnzbd.anasjabri.com-tls
