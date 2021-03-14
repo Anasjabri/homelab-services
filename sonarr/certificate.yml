@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: sonarr.anasjabri.com
+  namespace: sonarr
+spec:
+  secretName: sonarr.anasjabri.com-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: sonarr.anasjabri.com
+  dnsNames:
+  - sonarr.anasjabri.com

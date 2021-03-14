@@ -1,21 +1,22 @@
----
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: sabnzbd-ingressroute
-  namespace: sabnzbd
+  name: lidarr-ingressroute
+  namespace: lidarr
 spec:
   entryPoints:
     - web
     - websecure
   routes:
-    - match: Host(`sabnzbd.anasjabri.com`)
+    - match: Host(`lidarr.anasjabri.com`)
       kind: Rule
       services:
-      - name: sabnzbd
+      - name: lidarr
         port: 8080
       middlewares:
       - name: basic-auth
         namespace: kube-system
+      - name: redirect-scheme
+        namespace: kube-system
   tls:
-    secretName: sabnzbd.anasjabri.com-tls
+    secretName: lidarr.anasjabri.com-tls

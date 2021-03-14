@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: headphones
+  namespace: headphones
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: headphones
+  template:
+    metadata:
+      labels:
+        app: headphones
+    spec:
+      containers:
+      - env:
+        - name: TZ
+          value: America/Edmonton
+        image: linuxserver/headphones
+        imagePullPolicy: Always
+        name: headphones
+        ports:
+        - name: http
+          containerPort: 8181
+        volumeMounts:
+        - mountPath: /config
+          name: headphones-config
+        - mountPath: /downloads
+          name: headphones-downloads
+        - mountPath: /music 
+          name: headphones-music 
+      restartPolicy: Always
+      volumes:
+      - name: headphones-config
+        persistentVolumeClaim:
+          claimName: headphones-config
+      - name: headphones-downloads
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/plex
+          server: 10.0.5.226
+      - name: headphones-music
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/plex/music 
+          server: 10.0.5.226

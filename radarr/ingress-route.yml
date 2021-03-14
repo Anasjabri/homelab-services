@@ -1,21 +1,22 @@
----
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: sabnzbd-ingressroute
-  namespace: sabnzbd
+  name: radarr-ingressroute
+  namespace: radarr
 spec:
   entryPoints:
     - web
     - websecure
   routes:
-    - match: Host(`sabnzbd.anasjabri.com`)
+    - match: Host(`radarr.anasjabri.com`)
       kind: Rule
       services:
-      - name: sabnzbd
+      - name: radarr
         port: 8080
       middlewares:
       - name: basic-auth
         namespace: kube-system
+      - name: redirect-scheme
+        namespace: kube-system
   tls:
-    secretName: sabnzbd.anasjabri.com-tls
+    secretName: radarr.anasjabri.com-tls

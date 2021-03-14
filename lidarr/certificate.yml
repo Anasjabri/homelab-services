@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: lidarr.anasjabri.com
+  namespace: lidarr
+spec:
+  secretName: lidarr.anasjabri.com-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: lidarr.anasjabri.com
+  dnsNames:
+  - lidarr.anasjabri.com

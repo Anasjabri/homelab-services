@@ -1,15 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sabnzbd
-  namespace: sabnzbd
+  name: headphones
+  namespace: headphones
 spec:
   ports:
-  - name: web
+  - name: webs
     port: 8080
     protocol: TCP
-    targetPort: 8080
+    targetPort: 8181
   selector:
-    app: sabnzbd
+    app: headphones
   type: LoadBalancer
-  loadBalancerIP: 10.0.20.4

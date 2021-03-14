@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  namespace: radarr
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      containers:
+      - env:
+        - name: TZ
+          value: America/Edmonton
+        image: linuxserver/radarr
+        imagePullPolicy: Always
+        name: radarr
+        ports:
+        - name: http
+          containerPort: 7878
+        volumeMounts:
+        - mountPath: /config
+          name: radarr-config
+        - mountPath: /downloads
+          name: radarr-downloads
+        - mountPath: /movies 
+          name: radarr-movies 
+      restartPolicy: Always
+      volumes:
+      - name: radarr-config
+        persistentVolumeClaim:
+          claimName: radarr-config
+      - name: radarr-downloads
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/plex
+          server: 10.0.5.226
+      - name: radarr-movies 
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/plex/movies 
+          server: 10.0.5.226

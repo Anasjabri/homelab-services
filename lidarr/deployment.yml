@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lidarr
+  namespace: lidarr
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: lidarr
+  template:
+    metadata:
+      labels:
+        app: lidarr
+    spec:
+      containers:
+      - env:
+        - name: TZ
+          value: America/Edmonton
+        image: linuxserver/lidarr
+        imagePullPolicy: Always
+        name: lidarr
+        ports:
+        - name: http
+          containerPort: 8686
+        volumeMounts:
+        - mountPath: /config
+          name: lidarr-config
+        - mountPath: /downloads
+          name: lidarr-downloads
+        - mountPath: /music 
+          name: lidarr-music 
+      restartPolicy: Always
+      volumes:
+      - name: lidarr-config
+        persistentVolumeClaim:
+          claimName: lidarr-config
+      - name: lidarr-downloads
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/plex
+          server: 10.0.5.226
+      - name: lidarr-music 
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/plex/music 
+          server: 10.0.5.226

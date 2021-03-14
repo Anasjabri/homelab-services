@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+  namespace: sonarr
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+      - env:
+        - name: TZ
+          value: America/Edmonton
+        image: linuxserver/sonarr
+        imagePullPolicy: Always
+        name: sonarr
+        ports:
+        - name: http
+          containerPort: 8989
+        volumeMounts:
+        - mountPath: /config
+          name: sonarr-config
+        - mountPath: /downloads
+          name: sonarr-data
+        - mountPath: /tv
+          name: sonarr-tv
+      restartPolicy: Always
+      volumes:
+      - name: sonarr-config
+        persistentVolumeClaim:
+          claimName: sonarr-config
+      - name: sonarr-data
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/plex
+          server: 10.0.5.226
+      - name: sonarr-tv
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/plex/tv
+          server: 10.0.5.226

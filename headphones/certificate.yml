@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: headphones.anasjabri.com
+  namespace: headphones
+spec:
+  secretName: headphones.anasjabri.com-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: headphones.anasjabri.com
+  dnsNames:
+  - headphones.anasjabri.com

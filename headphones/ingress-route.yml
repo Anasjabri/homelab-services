@@ -1,0 +1,22 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: headphones-ingressroute
+  namespace: headphones
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`headphones.anasjabri.com`)
+      kind: Rule
+      services:
+      - name: headphones
+        port: 8181
+      middlewares:
+      - name: basic-auth
+        namespace: kube-system
+      - name: redirect-scheme
+        namespace: kube-system
+  tls:
+    secretName: headphones.anasjabri.com-tls
