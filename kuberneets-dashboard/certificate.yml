@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kubernetes.anasjabri.com
+  namespace: kubernetes-dashboard
+spec:
+  secretName: kubernetes.anasjabri.com-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: kubernetes.anasjabri.com
+  dnsNames:
+  - kubernetes.anasjabri.com
