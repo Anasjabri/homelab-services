@@ -1,0 +1,20 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: test.anasjabri.com
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`test.anasjabri.com`)
+      kind: Rule
+      services:
+      - name: nginx
+        port: 80
+      middlewares:
+      - name: basic-auth
+        namespace: kube-system
+  tls:
+    secretName: test.anasjabri.com-tls
