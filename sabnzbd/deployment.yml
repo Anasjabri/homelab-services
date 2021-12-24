@@ -21,7 +21,7 @@ spec:
         - name: TZ
           value: America/Edmonton
         image: linuxserver/sabnzbd:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         name: sabnzbd
         ports:
         - name: http
@@ -30,13 +30,19 @@ spec:
         - mountPath: /config
           name: sabnzbd-config
         - mountPath: /downloads
-          name: sabnzbd-data
+          name: sabnzbd-downloads
+        - mountPath: /incomplete-downloads
+          name: sabnzbd-incomplete-downloads
       restartPolicy: Always
       volumes:
       - name: sabnzbd-config
         persistentVolumeClaim:
           claimName: sabnzbd-config
-      - name: sabnzbd-data
+      - name: sabnzbd-downloads
         nfs:
           path: /mnt/TrueNAS_2TB_pool_1/plex
-          server: 10.0.5.226
+          server: 10.0.15.15
+      - name: sabnzbd-incomplete-downloads
+        nfs:
+          path: /mnt/TrueNAS_2TB_pool_1/sabnzbd/incomplete-downloads
+          server: 10.0.15.15

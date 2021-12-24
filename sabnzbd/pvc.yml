@@ -6,8 +6,9 @@ metadata:
   name: sabnzbd-config
   namespace: sabnzbd
 spec:
+  storageClassName: freenas-iscsi-csi
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
