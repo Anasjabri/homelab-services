@@ -1,0 +1,49 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: iscsi-vol
+provisioner: iscsi-vol
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: iscsi-pv
+  labels:
+    name: data-iscsi-pv
+spec:
+  storageClassName: iscsi-vol
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 150Gi
+  csi:
+    driver: iscsi.csi.k8s.io
+    volumeHandle: iscsi-data-id
+    volumeAttributes:
+      targetPortal: "10.0.50.229:3261"
+      portals: "[]"
+      iqn: "iqn.2005-10.org.freenas.ctl:k8-iscsi"
+      lun: "0"
+      iscsiInterface: "default"
+      discoveryCHAPAuth: "true"
+      sessionCHAPAuth: "false"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-claim-iscsi
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi
+  storageClassName: iscsi-vol
+  selector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values: ["data-iscsi-pv"]
