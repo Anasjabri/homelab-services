@@ -20,3 +20,11 @@ also been experimenting with home assistant for home automation.
 
 ## Top level Architecture Diagram
 ![Untitled (1)](https://github.com/user-attachments/assets/9b75c0af-127a-41e3-85f6-f597e1fc6d6f)
+
+
+## Public services
+All the services that are accessible publicly are accesses through Cloudflare argo tunnels. for more details read https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/
+
+![Uploading Untitled (2).jpg…]()
+
+
