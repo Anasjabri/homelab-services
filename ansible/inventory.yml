@@ -1,0 +1,12 @@
+---
+#### YAML inventory file
+
+all:
+  children:
+    kubernetes_control:
+      hosts:
+        <<List of control nodes>>
+    kubernetes_nodes:
+      hosts:
+        <<List of kubernetes runner/nodes>>
+
