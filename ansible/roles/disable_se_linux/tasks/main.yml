@@ -1,0 +1,11 @@
+- name: Disable SELinux
+  become: yes
+  selinux:
+    state: disabled
+- name: change SELinux value to permissive in config file
+  become: yes
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: 'SELINUX=permissive'
+  

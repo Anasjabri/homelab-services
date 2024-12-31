@@ -1,0 +1,15 @@
+- name: setup containerd for kubernetes
+  become: yes
+  blockinfile:
+    path: /etc/containerd/config.toml
+    create: yes
+    state: present
+    insertafter: EOF
+    marker: "  "
+    #marker_begin: "#ANSIBLE MANAGED BLOCK START"
+    #marker_end: "#ANSIBLE MANAGED BLOCK END "
+    block: |
+      [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+        runtime_type = "io.containerd.runc.v2"
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+          SystemdCgroup = true

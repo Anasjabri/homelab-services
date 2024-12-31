@@ -1,0 +1,8 @@
+- name: Creating docker directory in system d 
+  become: yes
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - /etc/docker
+    - /etc/systemd/system/docker.service.d

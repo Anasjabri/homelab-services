@@ -1,0 +1,3 @@
+- include_tasks: add_yum_repo.yml
+- include_tasks: install_k8_tools.yml
+- include_tasks: start_kubelet.yml

@@ -1,0 +1,4 @@
+- name: install docker
+  become: yes
+  shell: |
+    yum install -y containerd.io docker-ce docker-ce-cli docker-buildx-plugin --allowerasing

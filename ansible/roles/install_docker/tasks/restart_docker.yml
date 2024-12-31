@@ -1,0 +1,6 @@
+- name: restart docker and set it to start on boot
+  become: yes
+  shell: |
+    systemctl daemon-reload
+    systemctl restart docker
+    systemctl enable --now docker.service
