@@ -1,0 +1,8 @@
+- name: install docker dependencies
+  become: yes
+  yum:
+    name:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+    state: installed

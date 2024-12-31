@@ -1,0 +1,6 @@
+- include_tasks: install_docker_dependencies.yml
+- include_tasks: add_yum_repos_for_docker.yml
+- include_tasks: install_docker.yml
+- include_tasks: create_required_dirs.yml
+- include_tasks: setup_docker_daemon.yml
+- include_tasks: restart_docker.yml

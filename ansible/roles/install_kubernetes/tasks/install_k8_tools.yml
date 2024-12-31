@@ -1,0 +1,9 @@
+- name: install all tools need for kubernetes
+  become: yes
+  yum:
+    name:
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: installed
+    disable_excludes: kubernetes

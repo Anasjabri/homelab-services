@@ -1,0 +1,5 @@
+- name: start kubelet 
+  become: yes
+  shell: |
+    systemctl enable --now kubelet
+    systemctl start kubelet

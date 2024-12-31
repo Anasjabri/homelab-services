@@ -1,0 +1,19 @@
+- name: setup docker daemon
+  become: yes
+  blockinfile:
+    path: /etc/docker/daemon.json
+    create: yes
+    state: present
+    insertafter: EOF
+    #marker: ""
+    #marker_begin: "/* ANSIBLE MANAGED BLOCK START */"
+    #marker_end: "/* ANSIBLE MANAGED BLOCK END */"
+    block: |
+      {
+        "exec-opts": ["native.cgroupdriver=systemd"],
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "100m"
+        },
+        "storage-driver": "overlay2"
+      }

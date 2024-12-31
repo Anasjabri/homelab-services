@@ -1,0 +1,10 @@
+- name: set bridge traffic visibility
+  become: yes
+  blockinfile:
+    path: /etc/sysctl.d/k8s.conf
+    create: yes
+    state: present
+    insertafter: EOF
+    block: |
+      net.bridge.bridge-nf-call-ip6tables = 1
+      net.bridge.bridge-nf-call-iptables = 1

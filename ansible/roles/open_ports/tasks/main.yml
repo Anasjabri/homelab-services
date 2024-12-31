@@ -1,0 +1,15 @@
+- name: permit traffic on ports
+  become: yes
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop:
+    - 6443/tcp
+    - 2379/tcp
+    - 2380/tcp
+    - 10250/tcp
+    - 10251/tcp
+    - 10252/tcp
+    - 10255/tcp

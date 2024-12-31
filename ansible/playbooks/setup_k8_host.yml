@@ -1,0 +1,11 @@
+- hosts: all
+  remote_user: kubeworker0
+  roles:
+    - install_traffic_control_utility
+    - make_bridge_traffic_visible_to_ip_tables
+    - open_ports
+    - disable_swap
+    - disable_se_linux
+    - enable_bridge_firewall_rule
+    - install_docker
+    - install_kubernetes

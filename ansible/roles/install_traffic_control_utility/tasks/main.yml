@@ -1,0 +1,5 @@
+- name: Install iproute-tc package
+  become: yes
+  yum:
+    name: iproute-tc
+    state: installed

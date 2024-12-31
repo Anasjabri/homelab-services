@@ -1,0 +1,9 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+  - name: add a line in etc/hosts
+    lineinfile:
+      path: /etc/hosts
+      state: present
+      line: "{{ ansible_ens18.ipv4.address }} {{ ansible_hostname }}.anasjabri.com"
