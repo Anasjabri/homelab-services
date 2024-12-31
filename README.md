@@ -25,6 +25,7 @@ also been experimenting with home assistant for home automation.
 ## Public services
 All the services that are accessible publicly are accesses through Cloudflare argo tunnels. for more details read https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/
 
-![Uploading Untitled (2).jpg…]()
+
+![Untitled (2)](https://github.com/user-attachments/assets/52373afd-9864-4a57-9381-2aac0d472ffc)
 
 
