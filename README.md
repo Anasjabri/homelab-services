@@ -37,6 +37,8 @@ Homelab repo/
 
 ```
 Basically each service is in its own folder. For each of this service every kubernetes resource is in separate file.
+All the ansible scripts and playbooks are in ansible folder.
+
 
 
 ## Public services
